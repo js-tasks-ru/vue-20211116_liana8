@@ -30,3 +30,31 @@ const emails = [
 ];
 
 // Требуется создать Vue приложение
+
+import { createApp, defineComponent } from './vendor/vue.esm-browser.js';
+ 
+// Создайте Vue приложение
+const RootComponent = defineComponent({
+    name: 'Root',
+    data() {
+        return {
+            emails,
+            search: '',
+        };
+    },
+    
+    computed: { 
+        filteredEmails() {
+            return this.emails.map((email) => { return { email: email, marked: 'dg'}});
+            //const marked = (email) => emails.includes(this.search); 
+            //return emails;            
+        //    
+        //    return { email: this.email, marked: marked };  
+        },     
+    },
+
+});
+  
+const app = createApp(RootComponent);
+ 
+const vm = app.mount('#app');

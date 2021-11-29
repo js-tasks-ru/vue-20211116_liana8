@@ -31,7 +31,7 @@
     <div id="app" class="container">
       <div class="row">
         <div class="col">
-          <input :value="a" type="number" @input="a = $event.target.value" />
+          <input type="number" v-model="a" />
         </div>
 
         <div class="col" style="display: flex; flex-direction: column; font-family: emoji">
@@ -42,7 +42,7 @@
         </div>
 
         <div class="col">
-          <input :value="b" type="number" @input="b = $event.target.value" />
+          <input type="number" v-model="b" />
         </div>
 
         <div class="col">=</div>
