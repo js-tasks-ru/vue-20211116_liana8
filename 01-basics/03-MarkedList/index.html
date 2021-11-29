@@ -17,11 +17,11 @@
           <input type="search" v-model="search"/>
         </div>
         <ul>
-          <li v-for="email in filteredEmails" >{{ email.marked }}</li>
+          <li v-for="email in filteredEmails" :class="{marked: email.marked}">{{ email.email }}</li>
         </ul>
       </div>
     </div>
-
+ 
     <script type="module" src="script.js"></script>
   </body>
 </html>
