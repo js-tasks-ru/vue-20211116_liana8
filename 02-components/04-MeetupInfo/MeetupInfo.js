@@ -25,6 +25,10 @@ export default defineComponent({
         month: 'short',
         day: 'numeric',
       });
+    },  
+
+    formatAsIsoDate(timestamp) {
+      return new Date(timestamp).toISOString().split('T')[0];
     },
   },
 
@@ -40,7 +44,7 @@ export default defineComponent({
       </li>
       <li>
         <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg" />
-        <time>{{ formatAsLocalDate(date) }}</time>
+        <time :date="formatAsIsoDate(date)">{{ formatAsLocalDate(date) }}</time>
       </li>
     </ul>`,
 });
