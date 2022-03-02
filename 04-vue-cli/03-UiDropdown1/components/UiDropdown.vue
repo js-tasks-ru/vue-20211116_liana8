@@ -1,30 +1,80 @@
 <template>
-  <div class="dropdown dropdown_opened">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <ui-icon icon="tv" class="dropdown__icon" />
-      <span>Title</span>
+  <div class="dropdown" :class="{ dropdown_opened: isOpen }">
+    <button type="button" class="dropdown__toggle" :class="{ dropdown__toggle_icon: hasIcons }" @click="toggleOpen">
+      <ui-icon v-if="selected?.icon" :icon="selected.icon" class="dropdown__icon" />
+      <span>{{ modelValue ? selected?.text : title }}</span>
     </button>
-
-    <div class="dropdown__menu" role="listbox">
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 1
-      </button>
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 2
+    <div v-show="isOpen" class="dropdown__menu" role="listbox">
+      <button
+        v-for="option in options"
+        :key="option.value"
+        class="dropdown__item"
+        :class="{ dropdown__item_icon: hasIcons }"
+        role="option"
+        type="button"
+        @click="select(option.value)"
+      >
+        <ui-icon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
+        {{ option.text }}
       </button>
     </div>
+    <select v-model="selectModel" style="display: none">
+      <option v-for="option in options" :key="option.value" :value="option.value">{{ option.text }}</option>
+    </select>
   </div>
 </template>
 
 <script>
 import UiIcon from './UiIcon';
-
 export default {
   name: 'UiDropdown',
-
   components: { UiIcon },
+  props: {
+    modelValue: {},
+    options: {
+      type: Array,
+      required: true,
+      validator: (options) =>
+        options.every(
+          (option) => typeof option === 'object' && option !== null && 'value' in option && 'text' in option,
+        ),
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+  },
+  emits: ['update:modelValue'],
+  data() {
+    return {
+      isOpen: false,
+    };
+  },
+  computed: {
+    selected() {
+      return this.options.find((option) => option.value === this.modelValue);
+    },
+    hasIcons() {
+      return this.options.some((option) => option.icon);
+    },
+    selectModel: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.select(value);
+      },
+    },
+  },
+  methods: {
+    toggleOpen() {
+      this.isOpen = !this.isOpen;
+    },
+    select(value) {
+      this.isOpen = false;
+      this.$emit('update:modelValue', value);
+    },
+  },
 };
 </script>
 
@@ -33,7 +83,6 @@ export default {
   position: relative;
   display: inline-block;
 }
-
 .dropdown__toggle {
   display: inline-block;
   background-color: var(--white);
@@ -54,7 +103,6 @@ export default {
   cursor: pointer;
   text-decoration: none;
 }
-
 .dropdown__toggle:after {
   content: '';
   position: absolute;
@@ -68,22 +116,18 @@ export default {
   height: 24px;
   transition: 0.2s transform;
 }
-
 .dropdown__toggle.dropdown__toggle_icon {
   padding-left: 56px;
 }
-
 .dropdown_opened .dropdown__toggle {
   border-color: var(--blue);
   border-bottom-color: transparent;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
-
 .dropdown_opened .dropdown__toggle:after {
   transform: rotate(180deg);
 }
-
 .dropdown__menu {
   margin: 0;
   width: 100%;
@@ -98,7 +142,6 @@ export default {
   border-top: none;
   overflow: hidden;
 }
-
 .dropdown_opened .dropdown__menu {
   display: flex;
   position: absolute;
@@ -109,7 +152,6 @@ export default {
   right: auto;
   bottom: auto;
 }
-
 .dropdown__item {
   padding: 8px 16px;
   font-weight: 500;
@@ -125,17 +167,14 @@ export default {
   outline: none;
   text-decoration: none;
 }
-
 .dropdown__item:hover,
 .dropdown__item:focus {
   background-color: var(--grey-light);
 }
-
 .dropdown__item.dropdown__item_icon {
   padding-left: 56px;
   position: relative;
 }
-
 .dropdown__item.dropdown__item_icon .dropdown__icon,
 .dropdown__toggle_icon .dropdown__icon {
   position: absolute;
