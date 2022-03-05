@@ -4,6 +4,10 @@
       <ui-icon v-if="selected?.icon" :icon="selected.icon" class="dropdown__icon" />
       <span>{{ modelValue ? selected?.text : title }}</span>
     </button>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
     <div v-show="isOpen" class="dropdown__menu" role="listbox">
       <button
         v-for="option in options"
@@ -18,6 +22,10 @@
         {{ option.text }}
       </button>
     </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
     <select v-model="selectModel" style="display: none">
       <option v-for="option in options" :key="option.value" :value="option.value">{{ option.text }}</option>
     </select>
@@ -29,8 +37,15 @@ import UiIcon from './UiIcon';
 export default {
   name: 'UiDropdown',
   components: { UiIcon },
+<<<<<<< HEAD
   props: {
     modelValue: {},
+=======
+
+  props: {
+    modelValue: {},
+
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
     options: {
       type: Array,
       required: true,
@@ -39,37 +54,71 @@ export default {
           (option) => typeof option === 'object' && option !== null && 'value' in option && 'text' in option,
         ),
     },
+<<<<<<< HEAD
+=======
+
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
     title: {
       type: String,
       required: true,
     },
   },
+<<<<<<< HEAD
   emits: ['update:modelValue'],
+=======
+
+  emits: ['update:modelValue'],
+
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
   data() {
     return {
       isOpen: false,
     };
   },
+<<<<<<< HEAD
+=======
+
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
   computed: {
     selected() {
       return this.options.find((option) => option.value === this.modelValue);
     },
+<<<<<<< HEAD
     hasIcons() {
       return this.options.some((option) => option.icon);
     },
+=======
+
+    hasIcons() {
+      return this.options.some((option) => option.icon);
+    },
+
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
     selectModel: {
       get() {
         return this.modelValue;
       },
+<<<<<<< HEAD
+=======
+
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
       set(value) {
         this.select(value);
       },
     },
   },
+<<<<<<< HEAD
+=======
+
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
   methods: {
     toggleOpen() {
       this.isOpen = !this.isOpen;
     },
+<<<<<<< HEAD
+=======
+
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
     select(value) {
       this.isOpen = false;
       this.$emit('update:modelValue', value);

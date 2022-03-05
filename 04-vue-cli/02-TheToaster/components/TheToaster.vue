@@ -1,21 +1,36 @@
 <template>
+<<<<<<< HEAD
   <div class="toasts">
     <div v-for="toast in toasts" class="toast" :type="toast.type" >
       <ui-icon class="toast__icon" :icon="toast.icon" />
       <span>{{ toast.message }}</span>
     </div>
   </div>
+=======
+  <ui-toaster>
+    <ui-toast v-for="toast in toasts" :key="toast.id" :type="toast.type">
+      {{ toast.message }}
+    </ui-toast>
+  </ui-toaster>
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
 </template>
 
 <script>
-import UiIcon from './UiIcon';
+import UiToaster from './UiToaster';
+import UiToast from './UiToast';
+
+const DELAY = 5000;
 
 const DELAY = 5000;
 
 export default {
   name: 'TheToaster',
 
+<<<<<<< HEAD
   components: { UiIcon },
+=======
+  components: { UiToaster, UiToast },
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
 
   data() {
     return {
@@ -25,6 +40,7 @@ export default {
 
   methods: {
     success(message) {
+<<<<<<< HEAD
       this.addToast('success', message, 'alert-circle');
     },
     error(message) {
@@ -50,56 +66,35 @@ export default {
 
     },
   },    
+=======
+      this.show('success', message);
+    },
+
+    error(message) {
+      this.show('error', message);
+    },
+
+    // Добавим универсальный метод, который может показывать тост любого типа
+    show(type, message) {
+      const toast = { type, message };
+
+      toast.id = setTimeout(() => {
+        // Удалять можно было бы простым unshift,
+        // но такой способ работает только, если DELAY одинаковый
+        const idToDelete = this.toasts.indexOf(toast);
+        // У нас не может быть ситуации, что тост не нашёлся
+        // Но можно предусмотреть удаление вне таймера или другие непредвиденные ошибки
+        if (idToDelete !== -1) {
+          this.toasts.splice(idToDelete, 1);
+        }
+      }, DELAY);
+
+      this.toasts.push(toast);
+    },
+  },
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
 };
 
 </script>
 
-<style scoped>
-.toasts {
-  position: fixed;
-  bottom: 8px;
-  right: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  white-space: pre-wrap;
-  z-index: 999;
-}
-
-@media all and (min-width: 992px) {
-  .toasts {
-    bottom: 72px;
-    right: 112px;
-  }
-}
-
-.toast {
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: row;
-  align-items: center;
-  padding: 16px;
-  background: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
-  font-size: 18px;
-  line-height: 28px;
-  width: auto;
-}
-
-.toast + .toast {
-  margin-top: 20px;
-}
-
-.toast__icon {
-  margin-right: 12px;
-}
-
-.toast.toast_success {
-  color: var(--green);
-}
-
-.toast.toast_error {
-  color: var(--red);
-}
-</style>
+<style></style>
