@@ -5,12 +5,18 @@ export const router = createRouter({
   routes: [
     {
       path: '/page-a',
-      alias: '/',
+      name: 'pageA',
       component: () => import('../views/PageA'),
     },
     {
       path: '/page-b',
+      name: 'pageB',
       component: () => import('../views/PageB'),
     },
+    { 
+      path: '/:pathMatch(.*)*', 
+      name: 'NotFound', 
+      component:() => import('../views/PageNotFound'), 
+    },    
   ],
 });

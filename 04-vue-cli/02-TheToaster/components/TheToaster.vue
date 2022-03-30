@@ -1,9 +1,18 @@
 <template>
+<<<<<<< HEAD
+  <div class="toasts">
+    <div v-for="toast in toasts" class="toast" :type="toast.type" >
+      <ui-icon class="toast__icon" :icon="toast.icon" />
+      <span>{{ toast.message }}</span>
+    </div>
+  </div>
+=======
   <ui-toaster>
     <ui-toast v-for="toast in toasts" :key="toast.id" :type="toast.type">
       {{ toast.message }}
     </ui-toast>
   </ui-toaster>
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
 </template>
 
 <script>
@@ -12,10 +21,16 @@ import UiToast from './UiToast';
 
 const DELAY = 5000;
 
+const DELAY = 5000;
+
 export default {
   name: 'TheToaster',
 
+<<<<<<< HEAD
+  components: { UiIcon },
+=======
   components: { UiToaster, UiToast },
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
 
   data() {
     return {
@@ -25,6 +40,33 @@ export default {
 
   methods: {
     success(message) {
+<<<<<<< HEAD
+      this.addToast('success', message, 'alert-circle');
+    },
+    error(message) {
+      this.addToast('error', message, 'check-circle');
+    },  
+
+  addToast(type, message, icon) {
+
+        const toastId  = setTimeout(() => {
+          const idToDelete = this.toasts.indexOf(toast);
+          if (idToDelete !== -1) {
+            this.toasts.splice(idToDelete, 1);
+          }
+        }, DELAY);
+
+      var toast = {
+         type: type, 
+         message: message,
+         id: toastId , 
+         icon: icon,
+         };
+       this.toasts.push(toast);
+
+    },
+  },    
+=======
       this.show('success', message);
     },
 
@@ -50,7 +92,9 @@ export default {
       this.toasts.push(toast);
     },
   },
+>>>>>>> 921b6cff2bff5d687f72254882f2819326ae4ea7
 };
+
 </script>
 
 <style></style>
