@@ -22,12 +22,9 @@
 <script>
 import { RouterLink } from 'vue-router';
 import UiLink from './components/UiLink';
-
 export default {
   name: 'App',
-
   components: { UiLink },
-
   computed: {
     RouterLink() {
       return RouterLink;
